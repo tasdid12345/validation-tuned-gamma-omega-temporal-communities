@@ -23,6 +23,28 @@ python analysis.py
 ## Results
 Results are written to `results.json`. Charts are saved to `figures/`.
 
+## Results (latest run)
+
+On the public CollegeMsg network, a standard multilayer Louvain at default γ=1, ω=1 reached 34.5% test intra-community interaction fraction, versus 40.2% with γ=0.5, ω=0.25 chosen on validation; a modest 5.7-point gain on one dataset over 3 seeds.
+
+| Metric | Value |
+|---|---|
+| baseline_score | 0.3451 |
+| improved_score | 0.4023 |
+| improvement | 0.05713 |
+| baseline_score_std | 0.002797 |
+| improved_score_std | 0 |
+| baseline_n_communities | 271.3 |
+| improved_n_communities | 19.67 |
+| baseline_stability_ari | 0.9603 |
+| improved_stability_ari | 0.999 |
+| selected_gamma | 0.5 |
+| selected_omega | 0.25 |
+
+Run on 2026-10-12. Full output: [results.json](results.json) · [run.log](run.log)
+
+Notes: Louvain is applied to the whole supra-graph with a single resolution parameter, an approximation of Mucha's layer-wise null model; this is not the LAGO algorithm of the motivating paper. Interactions are treated as undirected and unweighted by direction. Communities are fixed from the training window; each user takes its label from the latest training slice; users unseen in training are singletons. The validation window is a time-ordered part of the non-test data, never the test set. Single dataset, small grid, 3 seeds; differences may be small relative to seed variation.
+
 ## Reference
 
 This project is motivated by the following paper:
