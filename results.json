@@ -1,0 +1,31 @@
+{
+  "question": "Can choosing the resolution \u03b3 and temporal coupling \u03c9 on an earlier validation window give communities that better explain later interactions than the default \u03b3=1, \u03c9=1 setting on a public temporal messaging network?",
+  "method": "Time-ordered 60/20/20 split of CollegeMsg messages. Multilayer Louvain communities are built on the training window; \u03b3, \u03c9 are selected on the validation window by intra-community fraction minus a partition-instability penalty; the test window is scored once for both models over seeds 42-44.",
+  "dataset": {
+    "name": "UCI/SNAP CollegeMsg temporal messaging network",
+    "source_url": "https://snap.stanford.edu/data/CollegeMsg.txt.gz",
+    "n_rows": 59835,
+    "n_train": 35901,
+    "n_test": 11967,
+    "same_as_paper": false,
+    "baseline_is_papers_method": false
+  },
+  "metric_name": "test-window intra-community interaction fraction",
+  "higher_is_better": true,
+  "baseline": "Multilayer (Mucha-style) Louvain over time slices with default \u03b3=1 and \u03c9=1.",
+  "improved": "Same multilayer Louvain, with \u03b3 and \u03c9 chosen from a small grid by maximizing validation-window intra-community fraction penalized by seed instability (1 - ARI).",
+  "metrics": {
+    "baseline_score": 0.3451435893150609,
+    "improved_score": 0.40227291718893626,
+    "improvement": 0.05712932787387537,
+    "baseline_score_std": 0.002796834710133149,
+    "improved_score_std": 0.0,
+    "baseline_n_communities": 271.3333333333333,
+    "improved_n_communities": 19.666666666666668,
+    "baseline_stability_ari": 0.960287741316152,
+    "improved_stability_ari": 0.9989613660501853,
+    "selected_gamma": 0.5,
+    "selected_omega": 0.25
+  },
+  "notes": "Louvain is applied to the whole supra-graph with a single resolution parameter, an approximation of Mucha's layer-wise null model; this is not the LAGO algorithm of the motivating paper. Interactions are treated as undirected and unweighted by direction. Communities are fixed from the training window; each user takes its label from the latest training slice; users unseen in training are singletons. The validation window is a time-ordered part of the non-test data, never the test set. Single dataset, small grid, 3 seeds; differences may be small relative to seed variation."
+}
